@@ -1,0 +1,29 @@
+USE [FTSHRIS_Masmerine]
+GO
+/****** Object:  StoredProcedure [dbo].[prcGetCrewInfo]    Script Date: 01/28/2019 15:43:31 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER proc [dbo].[prcGetCrewInfo] @id int=0
+as
+begin
+if @id=0
+begin
+--	Rank
+select 0 as aId,'--Select Rank--' as 'Rank'
+union all
+SELECT [aId],[Rank]  FROM [tblRank]
+
+--	Crew List
+select C.aId ID,FileNo,FullName Name,Rank,CDC CDCNo,Contact ContactNo,convert(varchar,DateofBirth,106) as DateofBirth,Email,Salary,Status,R.aId rankId,Address Address from dbo.tblCrewInfo C
+Inner Join [tblRank] R On C.RankId=R.Aid
+end 
+else
+begin
+--	Crew List
+select C.aId ID,FileNo,FullName Name,Rank,CDC CDCNo,Contact ContactNo,convert(varchar,DateofBirth,101) as DateofBirth,Email,Salary,Status,R.aId rankId,Address Address,datediff(year,DateofBirth,getdate()) Age from dbo.tblCrewInfo C
+Inner Join [tblRank] R On C.RankId=R.Aid
+where C.aId=@id
+end
+end

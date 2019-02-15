@@ -1,0 +1,4 @@
+UPDATE [FTSHRIS_Masmerine].[dbo].[tblCrewInfo]
+   [Address] = <Address, varchar,>
+ 
+

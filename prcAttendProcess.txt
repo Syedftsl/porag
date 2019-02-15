@@ -1,0 +1,6 @@
+update tblemp_info
+set IsInactive=1
+where empid  in(select EmpId from tblEmp_Released) and IsInactive=0
+
+
+and A.IsInactive like case when @EmpStatus='Active' then '0' else '1' end
